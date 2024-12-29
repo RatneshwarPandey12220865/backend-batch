@@ -1,6 +1,6 @@
 const http = require("http");
 const fs = require("fs");
-const { Transform } = require("stream");
+const { Transform ,pipeline} = require("stream");
 
 const server = http.createServer((req, res) => {
   // ?------1----------
