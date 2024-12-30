@@ -1,4 +1,4 @@
-1. intor and setup.
+1. intro and setup.
 2. get requests.
 3. post requests.
 3. put.
