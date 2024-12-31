@@ -1,18 +1,27 @@
-import express from "express";
-import { generateToken } from "../utils/tokenUtils.js";
+import express from 'express';
+import { generateToken } from '../utils/token-utils.js';
+
 
 const router = express.Router();
 
-router.get("/generate-router", (req, res) => {
-    const token = generateToken();
-    res.send({
-        message: "Token generated successfully",
-        token,
-    })
-});
 
-router.get("/", (req, res) => {
-    res.send("Welcome to the public route");
-});
+router.get("/generate-token" ,(req , res)=>{
+    const token = generateToken();
+
+    res.status(200).send({
+        message:"Token generated please save it for future use",
+        token: token
+    })
+} )
+
+
+router.get("/" , (req , res)=>{
+    res.status(200).send({
+        message:"Welcome to the home page🏡"
+    })
+})
+
+// Generate-token
+// Home route
 
 export default router;
