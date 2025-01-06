@@ -1,39 +1,38 @@
-import express from 'express';
-import bodyParser from 'body-parser';
+import express from "express";
 import session from "express-session";
+import cookieParse  from "cookie-parser";
 
-
-
-import authRoutes from './routes/authRoutes.js';
-import taskRoutes from './routes/taskRoutes.js';
-
-
+import authRoute from "./routes/auth.routes.js";
+import taskRoute from "./routes/task.routes.js";
 
 const app = express();
+const PORT = 8080;
 
-// Middleware
-app.use(bodyParser.json());
 
-app.use(
-  session({
-    secret: "your_secret_key", // Replace with a strong secret key
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true,
-      secure: false, // Set to `true` if using HTTPS
-      maxAge: 1000 * 60 * 60 * 24, // 24 hours
-    },
-  })
-);
+// Global Middleware
+app.use(express.json());
 
+app.use(session({
+  secret:"your-secret-key",
+  resave:false,
+  saveUninitialized:false,
+  cookie:{
+    httpOnly:true,
+    secure:false,
+    maxAge:1000*60*60*24 // 1 day
+  }
+}))
+app.use(cookieParse());
 
 // Routes
-app.use('/auth', authRoutes);
-app.use('/tasks', taskRoutes);
+app.get("/", (req, res) => {
+    res.send("Welcome to Task Manager API📗");
+});
 
-// Start Server
-const PORT = 3000;
+app.use("/auth" , authRoute)
+app.use("/task" , taskRoute)
+
+
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on PORT ${PORT}`);
 });

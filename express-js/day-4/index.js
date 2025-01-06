@@ -1,34 +1,43 @@
-import express, { response } from "express";
-import session from "express-session";
-import cookieParser from "cookie-parser";
+import cookieParser from "cookie-parser"
+import express from "express"
+import session from "express-session"
 
-const app = express();
+const app = express()
 
 app.use(session(
     {
-        secret:"codesnippet",
-        saveUninitialized: false,
-        resave: false,
+        secret:"mysecret",
+        saveUninitialized:false,
+        resave:false,
         cookie:{
-            maxAge: 1000 * 60 * 60 
+            maxAge:1000*60*60*24 // 1 day
         }
     }
 ))
 
-app.use(cookieParser("codesnippet"));
-
-
+app.use(cookieParser("codesnippet"))
 
 app.get("/", (req, res) => {
-    
     console.log(req.session);
     console.log(req.session.id);
-    req.session.visited = true;
-    res.cookie("username", "codesnippet", {signed: true ,maxAge: 1000 * 60 * 60});
-    res.send("Hello World");
-});
 
+    res.send("Hello World!")
+})
+
+app.get("/login" , (req , res)=>{
+    req.session.user = {
+        name:"John",
+        email:"jhon@example.com",
+        age:30
+    }
+    res.send(` ${req.session.user.name} is logged in`)
+})
+
+app.get('/logout', (req, res) => {
+    req.session.destroy();
+    res.send('Logged out');
+  });
 
 app.listen(3000, () => {
-    console.log("Server is running on port http://localhost:3000");
-});
+    console.log("Server is running on port 3000")
+})

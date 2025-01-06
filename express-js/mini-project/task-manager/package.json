@@ -2,12 +2,11 @@
   "name": "task-manager",
   "version": "1.0.0",
   "main": "server.js",
-"scripts": {
-  "start": "node src/server.js",
-  "dev": "nodemon --watch src --ignore src/utils/data/tasks.json src/server.js"
-}
-
-,
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/server.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -20,3 +19,5 @@
     "uuid": "^11.0.3"
   }
 }
+
+
