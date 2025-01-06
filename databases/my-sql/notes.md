@@ -21,17 +21,7 @@ A database is an organized collection of data stored electronically for easy acc
 2. **NoSQL Database**: Stores unstructured data like JSON, documents, or key-value pairs.
    - Examples: MongoDB, CouchDB, Cassandra, Redis.
 
-3. **Object-Oriented Database**: Represents data as objects, similar to object-oriented programming.
-   - Examples: db4o, ObjectDB.
 
-4. **Graph Database**: Stores data as nodes and edges for representing relationships.
-   - Examples: Neo4j, ArangoDB.
-
-5. **Key-Value Database**: Data is stored as key-value pairs.
-   - Examples: Redis, DynamoDB.
-
-6. **Column-Oriented Database**: Stores data in columns rather than rows.
-   - Examples: Apache HBase, Cassandra.
 
 ---
 
