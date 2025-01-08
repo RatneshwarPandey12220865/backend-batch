@@ -91,15 +91,88 @@ CREATE TABLE Orders (
 ### 4. Constraints
 
 SQL constraints are used to specify rules for data in a table. The common constraints are:
+Here are examples of each constraint you mentioned, showing how they are used in SQL:
 
-- **NOT NULL**: Ensures that a column cannot have NULL values.
-- **UNIQUE**: Ensures that all values in a column are different.
-- **PRIMARY KEY**: A combination of NOT NULL and UNIQUE that uniquely identifies each record.
-- **FOREIGN KEY**: Ensures that the values in one column correspond to valid values in another table.
-- **CHECK**: Ensures that values in a column meet a specific condition.
-- **DEFAULT**: Provides a default value for a column when no value is specified.
-- **INDEX**: Used to create indexes on columns for faster searches.
+### 1. **NOT NULL**
+   Ensures that a column cannot have NULL values.
+   ```sql
+   CREATE TABLE Employees (
+       EmployeeID INT NOT NULL,
+       Name VARCHAR(100),
+       Age INT
+   );
+   ```
 
+### 2. **UNIQUE**
+   Ensures that all values in a column are different.
+   ```sql
+   CREATE TABLE Employees (
+       EmployeeID INT NOT NULL,
+       Email VARCHAR(100) UNIQUE,
+       Name VARCHAR(100)
+   );
+   ```
+
+### 3. **PRIMARY KEY**
+   A combination of NOT NULL and UNIQUE that uniquely identifies each record.
+   ```sql
+   CREATE TABLE Employees (
+       EmployeeID INT PRIMARY KEY,
+       Name VARCHAR(100),
+       Age INT
+   );
+   ```
+
+### 4. **FOREIGN KEY**
+   Ensures that the values in one column correspond to valid values in another table.
+   ```sql
+   CREATE TABLE Departments (
+       DepartmentID INT PRIMARY KEY,
+       DepartmentName VARCHAR(100)
+   );
+   
+   CREATE TABLE Employees (
+       EmployeeID INT PRIMARY KEY,
+       Name VARCHAR(100),
+       DepartmentID INT,
+       FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID)
+   );
+   ```
+
+### 5. **CHECK**
+   Ensures that values in a column meet a specific condition.
+   ```sql
+   CREATE TABLE Employees (
+       EmployeeID INT PRIMARY KEY,
+       Name VARCHAR(100),
+       Age INT,
+       CHECK (Age >= 18) -- Ensures that age is 18 or older
+   );
+   ```
+
+### 6. **DEFAULT**
+   Provides a default value for a column when no value is specified.
+   ```sql
+   CREATE TABLE Employees (
+       EmployeeID INT PRIMARY KEY,
+       Name VARCHAR(100),
+       Age INT DEFAULT 30 -- Default age is 30 if no value is provided
+   );
+   ```
+
+### 7. **INDEX**
+   Used to create indexes on columns for faster searches.
+   ```sql
+   CREATE TABLE Employees (
+       EmployeeID INT PRIMARY KEY,
+       Name VARCHAR(100),
+       Age INT
+   );
+   
+   CREATE INDEX idx_name ON Employees (Name); -- Creates an index on the Name column
+   ```
+
+These are common SQL constraints used to ensure data integrity, improve performance, and define relationships between tables.
 Example of applying constraints in table creation:
 
 ```sql
