@@ -160,17 +160,7 @@ Here are examples of each constraint you mentioned, showing how they are used in
    );
    ```
 
-### 7. **INDEX**
-   Used to create indexes on columns for faster searches.
-   ```sql
-   CREATE TABLE Employees (
-       EmployeeID INT PRIMARY KEY,
-       Name VARCHAR(100),
-       Age INT
-   );
-   
-   CREATE INDEX idx_name ON Employees (Name); -- Creates an index on the Name column
-   ```
+
 
 These are common SQL constraints used to ensure data integrity, improve performance, and define relationships between tables.
 Example of applying constraints in table creation:
