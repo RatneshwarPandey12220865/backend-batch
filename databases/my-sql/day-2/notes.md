@@ -1,6 +1,6 @@
 
 
-### 1. Types of Commands in SQL
+### 1. Types of Commands in SQL✅
 
 SQL commands are classified into five main categories based on their functionality:
 
@@ -14,12 +14,13 @@ These commands are used to define or modify the structure of database objects, s
 
 #### **b. Data Manipulation Language (DML)**
 These commands are used to manipulate data in the database.
-- **SELECT**: Used to retrieve data from the database.
 - **INSERT**: Used to insert new records into a table.
 - **UPDATE**: Used to modify existing records.
 - **DELETE**: Used to remove records from a table.
 
-#### **c. Data Control Language (DCL)**
+
+
+#### **c. Data Control Language (DCL)** (accounts , marks)
 These commands are used to control access to data.
 - **GRANT**: Used to give users access privileges.
 - **REVOKE**: Used to remove access privileges from a user.
@@ -31,9 +32,12 @@ These commands manage transactions in the database.
 - **SAVEPOINT**: Sets a savepoint within a transaction.
 - **SET TRANSACTION**: Used to set the properties of a transaction.
 
+
+#### **e. Data Query Language ( DQL)**
+   - **SELECT**
 ---
 
-### 2. Practice Question
+### 2. Practice Question✅
 
 Write an SQL query to:
 1. Create a table called `Employees` with the following columns:
@@ -62,7 +66,7 @@ VALUES (1, 'John', 'Doe', 30, 60000);
 
 ---
 
-### 3. Keys (Primary and Foreign Keys)
+### 3. Keys (Primary and Foreign Keys)✅
 
 #### **Primary Key**
 - A primary key is a field or a combination of fields that uniquely identify a record in a table.
