@@ -1,6 +1,6 @@
 
 
-## **SQL `ALTER` Command**
+## **SQL `ALTER` Command**✅
 
 The `ALTER` command is used to modify the structure of an existing table. It allows you to add, delete, or modify columns in a table, as well as rename columns or the table itself.
 
