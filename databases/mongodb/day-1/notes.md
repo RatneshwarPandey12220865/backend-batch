@@ -132,7 +132,7 @@ db.myCollection.insertMany([
 ]);
 ```
 
-### **Ordered vs Unordered Inserts**
+### **Ordered vs Unordered Inserts** assignemnt
 - **Ordered Inserts**: MongoDB will stop inserting documents if one fails.
 - **Unordered Inserts**: MongoDB will continue inserting even if one document fails.
 ```javascript
