@@ -1,5 +1,5 @@
 <!-- REad operation in mongodb -->
-Here are some basic examples of MongoDB **find** and **findOne** operations on the provided data:
+
 
 ### **1. `find()` Examples**
 
@@ -138,6 +138,8 @@ This query selects documents where the "category" field does not match either "E
  <!-- Introduction to cursors
  cursor methods ( count , limit , skip , sort)
   -->
+  
+  
   ### **Introduction to Cursors in MongoDB**
 
 When you use the `find()` method in MongoDB, it returns a **cursor**, which is a pointer to the result set of a query. The cursor allows you to iterate through the documents in the collection efficiently. MongoDB provides several cursor methods to manipulate or process the data, including `count()`, `limit()`, `skip()`, and `sort()`.
