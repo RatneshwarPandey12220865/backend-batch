@@ -22,7 +22,7 @@
 ### Example Command:
 
 ```sh
-mongoimport --db shop --collection products --file products.json
+mongoimport --db video --collection comments --file day-3\video.json --jsonArray
 ```.
 
 - `--db shop`: Specifies the database name as "shop".
