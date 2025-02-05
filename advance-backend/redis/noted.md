@@ -47,7 +47,7 @@ Strings are the most basic data type in Redis. They can store text, integers, or
 #### **SET and GET**
 - **SET**: Stores a value in a key.
   ```bash
-  SET key value
+  SET key:id value
   ```
   Example:
   ```bash
@@ -459,3 +459,7 @@ Redis is a versatile and powerful tool for managing in-memory data structures. B
 
 
 
+
+
+https://docs.docker.com/desktop/setup/install/windows-install/
+https://docs.docker.com/desktop/setup/install/mac-install/
