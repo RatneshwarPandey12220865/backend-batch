@@ -436,3 +436,7 @@ runStreamExamples();
 
 ### **Conclusion**
 This guide now includes examples for all Redis data types, covering both CLI and Node.js (`ioredis`) usage. You can use these examples to experiment with Redis and build applications leveraging its rich set of features.
+
+How we can scale websockets servers using pub-sub model ( 
+
+)

@@ -1,25 +1,26 @@
 const express = require("express");
+const redis = require("./client");
 const axios = require("axios").default;
+
+
+
 const app = express();
-const client = require("./client")
 
-app.get("/", async (req, res) => {
-const cacheValue = await client.get("todos")
 
-if(cacheValue){
-    return res.json(JSON.parse(cacheValue))
-}
+app.get("/" , async(req , res)=>{
+  const cachedData = await redis.get("todoList");
 
-  const { data } = await axios.get(
-    "https://jsonplaceholder.typicode.com/todos"
-  );
+  if(cachedData){
+    return res.json(JSON.parse(cachedData))
+  }
+  const {data} = await axios.get("https://jsonplaceholder.typicode.com/todos")
 
-  await client.set("todos" , JSON.stringify(data));
-  await client.expire("todos", 30)
+  await redis.set("todoList" , JSON.stringify(data));
+  await redis.expire("todoList" , 30)
+  res.json(data)
+})
 
-  return res.json(data);
-});
 
-app.listen(9000,()=>{
-    console.log("Server is running fine")
-});
+app.listen(5001 , ()=>{
+  console.log("Server is up")
+})
