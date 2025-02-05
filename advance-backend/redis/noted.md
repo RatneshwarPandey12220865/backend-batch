@@ -1,28 +1,26 @@
-### Redis Notes
+
+
+## **Redis Notes**
 
 Redis (Remote Dictionary Server) is an open-source, in-memory data structure store used as a database, cache, and message broker. It supports various data structures such as strings, hashes, lists, sets, sorted sets, bitmaps, hyperloglogs, and geospatial indexes.
 
 ---
 
-## **1. Installation Using Docker**
-
+### **1. Installation Using Docker**
 To install Redis using Docker, follow these steps:
 
-### ** Pull the Redis Image**
+#### Pull the Redis Image
 Run the following command to pull the official Redis image from Docker Hub:
 ```bash
 docker run -d --name redis-stack -p 6379:6379 -p 8001:8001 redis/redis-stack:latest
 docker ps
-docker exec -it docker_id" bash
+docker exec -it docker_id bash
 redis-cli ping
-
 ```
-
 
 ---
 
-## **2. Redis Data Structures**
-
+### **2. Redis Data Structures**
 Redis supports several data structures, including:
 1. **Strings**
 2. **Lists**
@@ -34,432 +32,407 @@ Redis supports several data structures, including:
 8. **Geospatial Indexes**
 9. **Streams**
 
-Below, we will cover **Strings** and **Lists** in detail.
+Below, we will cover all data types in detail with CLI and Node.js examples.
 
 ---
 
-## **3. Strings**
-
-Strings are the most basic data type in Redis. They can store text, integers, or binary data.
-
-### **Basic Commands for Strings**
-
-#### **SET and GET**
-- **SET**: Stores a value in a key.
-  ```bash
-  SET key:id value
-  ```
-  Example:
-  ```bash
-  SET name "John"
-  ```
-
-- **GET**: Retrieves the value of a key.
-  ```bash
-  GET key
-  ```
-  Example:
-  ```bash
-  GET name
-  ```
-
-#### **INCR and DECR**
-- **INCR**: Increments the integer value of a key by 1.
-  ```bash
-  INCR key
-  ```
-  Example:
-  ```bash
-  SET counter 10
-  INCR counter
-  ```
-
-- **DECR**: Decrements the integer value of a key by 1.
-  ```bash
-  DECR key
-  ```
-  Example:
-  ```bash
-  DECR counter
-  ```
-
-#### **INCRBY and DECRBY**
-- **INCRBY**: Increments the integer value of a key by a specified amount.
-  ```bash
-  INCRBY key increment
-  ```
-  Example:
-  ```bash
-  INCRBY counter 5
-  ```
-
-- **DECRBY**: Decrements the integer value of a key by a specified amount.
-  ```bash
-  DECRBY key decrement
-  ```
-  Example:
-  ```bash
-  DECRBY counter 3
-  ```
-
-#### **APPEND**
-- **APPEND**: Appends a value to the string stored at a key.
-  ```bash
-  APPEND key value
-  ```
-  Example:
-  ```bash
-  SET greeting "Hello"
-  APPEND greeting " World"
-  ```
-
-#### **STRLEN**
-- **STRLEN**: Returns the length of the string stored at a key.
-  ```bash
-  STRLEN key
-  ```
-  Example:
-  ```bash
-  STRLEN greeting
-  ```
+### **3. Strings**
+(Already covered in previous notes)
 
 ---
 
-## **4. Lists**
-
-Lists in Redis are ordered collections of strings, implemented as linked lists. They allow push and pop operations from both ends.
-
-### **Basic Commands for Lists**
-
-#### **LPUSH and RPUSH**
-- **LPUSH**: Adds one or more elements to the head (left) of a list.
-  ```bash
-  LPUSH key value [value ...]
-  ```
-  Example:
-  ```bash
-  LPUSH tasks "Task1"
-  LPUSH tasks "Task2"
-  ```
-
-- **RPUSH**: Adds one or more elements to the tail (right) of a list.
-  ```bash
-  RPUSH key value [value ...]
-  ```
-  Example:
-  ```bash
-  RPUSH tasks "Task3"
-  ```
-
-#### **LPOP and RPOP**
-- **LPOP**: Removes and returns the first element (leftmost) of a list.
-  ```bash
-  LPOP key
-  ```
-  Example:
-  ```bash
-  LPOP tasks
-  ```
-
-- **RPOP**: Removes and returns the last element (rightmost) of a list.
-  ```bash
-  RPOP key
-  ```
-  Example:
-  ```bash
-  RPOP tasks
-  ```
-
-#### **LRANGE**
-- **LRANGE**: Retrieves a range of elements from a list.
-  ```bash
-  LRANGE key start stop
-  ```
-  Example:
-  ```bash
-  LRANGE tasks 0 -1
-  ```
-  - `0` refers to the first element.
-  - `-1` refers to the last element.
-
-#### **LLEN**
-- **LLEN**: Returns the length of a list.
-  ```bash
-  LLEN key
-  ```
-  Example:
-  ```bash
-  LLEN tasks
-  ```
-
-#### **LREM**
-- **LREM**: Removes elements from a list.
-  ```bash
-  LREM key count value
-  ```
-  - `count > 0`: Removes up to `count` occurrences from the head.
-  - `count < 0`: Removes up to `count` occurrences from the tail.
-  - `count = 0`: Removes all occurrences.
-  Example:
-  ```bash
-  LREM tasks 1 "Task1"
-  ```
-
-#### **LTRIM**
-- **LTRIM**: Trims a list to the specified range.
-  ```bash
-  LTRIM key start stop
-  ```
-  Example:
-  ```bash
-  LTRIM tasks 0 2
-  ```
+### **4. Lists**
+(Already covered in previous notes)
 
 ---
 
+### **5. Sets**
+Sets are unordered collections of unique strings.
 
-### Redis with Node.js Using `ioredis`
+#### **Basic Commands for Sets**
+##### **CLI Examples**
+- **SADD**: Add one or more members to a set.
+  ```bash
+  SADD fruits "apple"
+  SADD fruits "banana" "cherry"
+  ```
+- **SMEMBERS**: Retrieve all members of a set.
+  ```bash
+  SMEMBERS fruits
+  ```
+- **SREM**: Remove a member from a set.
+  ```bash
+  SREM fruits "banana"
+  ```
+- **SISMEMBER**: Check if a member exists in a set.
+  ```bash
+  SISMEMBER fruits "apple"
+  ```
+- **SINTER**: Find the intersection of multiple sets.
+  ```bash
+  SADD set1 "a" "b" "c"
+  SADD set2 "b" "c" "d"
+  SINTER set1 set2
+  ```
+- **SUNION**: Find the union of multiple sets.
+  ```bash
+  SUNION set1 set2
+  ```
+- **SDIFF**: Find the difference between sets.
+  ```bash
+  SDIFF set1 set2
+  ```
 
-`ioredis` is a popular Redis client for Node.js. Below, we will provide examples of how to interact with Redis **Strings** and **Lists** using `ioredis`. Each example will include the necessary setup and usage.
-
----
-
-## **1. Setup**
-
-### **Install `ioredis`**
-To use `ioredis`, install it via npm:
-```bash
-npm install ioredis
-```
-
-### **Create a Redis Client**
-In both `string.js` and `list.js`, you'll need to create a Redis client. Here's how:
-
-```javascript
-const Redis = require("ioredis");
-const redis = new Redis(); // Connects to localhost:6379 by default
-```
-
----
-
-## **2. Strings Example (`string.js`)**
-
-Below is an example of interacting with Redis Strings using `ioredis`.
-
-### **Code: `string.js`**
+##### **Node.js Example**
 ```javascript
 const Redis = require("ioredis");
 const redis = new Redis();
 
-async function runStringExamples() {
+async function runSetExamples() {
   try {
-    // SET a key-value pair
-    await redis.set("name", "Alice");
-    console.log('SET name = "Alice"');
+    // SADD: Add elements to a set
+    await redis.sadd("fruits", "apple");
+    await redis.sadd("fruits", "banana", "cherry");
+    console.log('SADD fruits: ["apple", "banana", "cherry"]');
 
-    // GET the value of a key
-    const name = await redis.get("name");
-    console.log(`GET name: ${name}`);
+    // SMEMBERS: Retrieve all members of a set
+    const fruits = await redis.smembers("fruits");
+    console.log(`SMEMBERS fruits: ${fruits}`);
 
-    // INCR: Increment a numeric value
-    await redis.set("counter", 10);
-    console.log('SET counter = 10');
-    await redis.incr("counter");
-    const incrementedCounter = await redis.get("counter");
-    console.log(`INCR counter: ${incrementedCounter}`);
+    // SREM: Remove a member from a set
+    await redis.srem("fruits", "banana");
+    console.log('SREM fruits: Removed "banana"');
 
-    // DECR: Decrement a numeric value
-    await redis.decr("counter");
-    const decrementedCounter = await redis.get("counter");
-    console.log(`DECR counter: ${decrementedCounter}`);
+    // SISMEMBER: Check if a member exists in a set
+    const hasApple = await redis.sismember("fruits", "apple");
+    console.log(`SISMEMBER fruits apple: ${hasApple ? "Yes" : "No"}`);
 
-    // APPEND: Append to a string
-    await redis.set("greeting", "Hello");
-    console.log('SET greeting = "Hello"');
-    await redis.append("greeting", " World");
-    const greeting = await redis.get("greeting");
-    console.log(`APPEND greeting: ${greeting}`);
+    // SINTER: Find the intersection of multiple sets
+    await redis.sadd("set1", "a", "b", "c");
+    await redis.sadd("set2", "b", "c", "d");
+    const intersection = await redis.sinter("set1", "set2");
+    console.log(`SINTER set1 set2: ${intersection}`);
 
-    // STRLEN: Get the length of a string
-    const length = await redis.strlen("greeting");
-    console.log(`STRLEN greeting: ${length}`);
+    // SUNION: Find the union of multiple sets
+    const union = await redis.sunion("set1", "set2");
+    console.log(`SUNION set1 set2: ${union}`);
+
+    // SDIFF: Find the difference between sets
+    const difference = await redis.sdiff("set1", "set2");
+    console.log(`SDIFF set1 set2: ${difference}`);
   } catch (error) {
     console.error("Error:", error);
   } finally {
-    // Disconnect from Redis
     redis.disconnect();
   }
 }
 
-runStringExamples();
-```
-
-### **Output**
-When you run `node string.js`, the output will look like this:
-```
-SET name = "Alice"
-GET name: Alice
-SET counter = 10
-INCR counter: 11
-DECR counter: 10
-SET greeting = "Hello"
-APPEND greeting: Hello World
-STRLEN greeting: 11
+runSetExamples();
 ```
 
 ---
 
-## **3. Lists Example (`list.js`)**
+### **6. Sorted Sets**
+Sorted Sets are similar to sets but with scores associated with each member.
 
-Below is an example of interacting with Redis Lists using `ioredis`.
+#### **Basic Commands for Sorted Sets**
+##### **CLI Examples**
+- **ZADD**: Add members with scores to a sorted set.
+  ```bash
+  ZADD leaderboard 100 "Alice"
+  ZADD leaderboard 200 "Bob" 150 "Charlie"
+  ```
+- **ZRANGE**: Retrieve members in a range by index.
+  ```bash
+  ZRANGE leaderboard 0 -1 WITHSCORES
+  ```
+- **ZREM**: Remove a member from a sorted set.
+  ```bash
+  ZREM leaderboard "Alice"
+  ```
+- **ZSCORE**: Get the score of a member.
+  ```bash
+  ZSCORE leaderboard "Bob"
+  ```
+- **ZRANK**: Get the rank of a member.
+  ```bash
+  ZRANK leaderboard "Charlie"
+  ```
 
-### **Code: `list.js`**
+##### **Node.js Example**
 ```javascript
 const Redis = require("ioredis");
 const redis = new Redis();
 
-async function runListExamples() {
+async function runSortedSetExamples() {
   try {
-    // LPUSH: Add elements to the head of the list
-    await redis.lpush("tasks", "Task3");
-    await redis.lpush("tasks", "Task2");
-    await redis.lpush("tasks", "Task1");
-    console.log('LPUSH tasks: ["Task1", "Task2", "Task3"]');
+    // ZADD: Add members with scores to a sorted set
+    await redis.zadd("leaderboard", 100, "Alice");
+    await redis.zadd("leaderboard", 200, "Bob", 150, "Charlie");
+    console.log('ZADD leaderboard: Alice=100, Bob=200, Charlie=150');
 
-    // RPUSH: Add elements to the tail of the list
-    await redis.rpush("tasks", "Task4");
-    console.log('RPUSH tasks: ["Task1", "Task2", "Task3", "Task4"]');
+    // ZRANGE: Retrieve members in a range by index
+    const leaderboard = await redis.zrange("leaderboard", 0, -1, "WITHSCORES");
+    console.log(`ZRANGE leaderboard: ${leaderboard}`);
 
-    // LRANGE: Retrieve all elements in the list
-    const tasks = await redis.lrange("tasks", 0, -1);
-    console.log(`LRANGE tasks: ${tasks}`);
+    // ZREM: Remove a member from a sorted set
+    await redis.zrem("leaderboard", "Alice");
+    console.log('ZREM leaderboard: Removed "Alice"');
 
-    // LPOP: Remove and return the first element
-    const firstTask = await redis.lpop("tasks");
-    console.log(`LPOP tasks: ${firstTask}`);
+    // ZSCORE: Get the score of a member
+    const bobScore = await redis.zscore("leaderboard", "Bob");
+    console.log(`ZSCORE leaderboard Bob: ${bobScore}`);
 
-    // RPOP: Remove and return the last element
-    const lastTask = await redis.rpop("tasks");
-    console.log(`RPOP tasks: ${lastTask}`);
-
-    // LLEN: Get the length of the list
-    const length = await redis.llen("tasks");
-    console.log(`LLEN tasks: ${length}`);
-
-    // LREM: Remove occurrences of a value
-    await redis.lpush("tasks", "Task2");
-    await redis.lrem("tasks", 1, "Task2"); // Remove 1 occurrence of "Task2"
-    console.log('LREM tasks: Removed 1 occurrence of "Task2"');
-
-    // LTRIM: Trim the list to a specific range
-    await redis.ltrim("tasks", 0, 1); // Keep only the first two elements
-    console.log("LTRIM tasks: Kept only the first two elements");
-
-    // Final list after operations
-    const finalTasks = await redis.lrange("tasks", 0, -1);
-    console.log(`Final LRANGE tasks: ${finalTasks}`);
+    // ZRANK: Get the rank of a member
+    const charlieRank = await redis.zrank("leaderboard", "Charlie");
+    console.log(`ZRANK leaderboard Charlie: ${charlieRank}`);
   } catch (error) {
     console.error("Error:", error);
   } finally {
-    // Disconnect from Redis
     redis.disconnect();
   }
 }
 
-runListExamples();
-```
-
-### **Output**
-When you run `node list.js`, the output will look like this:
-```
-LPUSH tasks: ["Task1", "Task2", "Task3"]
-RPUSH tasks: ["Task1", "Task2", "Task3", "Task4"]
-LRANGE tasks: Task1,Task2,Task3,Task4
-LPOP tasks: Task1
-RPOP tasks: Task4
-LLEN tasks: 2
-LREM tasks: Removed 1 occurrence of "Task2"
-LTRIM tasks: Kept only the first two elements
-Final LRANGE tasks: Task3,Task2
+runSortedSetExamples();
 ```
 
 ---
 
-## **4. Explanation of Key Concepts**
+### **7. Hashes**
+Hashes are maps between string fields and string values.
 
-### **Redis Strings**
-- **SET/GET**: Store and retrieve simple key-value pairs.
-- **INCR/DECR**: Perform atomic increments and decrements on numeric values.
-- **APPEND**: Concatenate strings efficiently.
-- **STRLEN**: Measure the size of stored strings.
+#### **Basic Commands for Hashes**
+##### **CLI Examples**
+- **HSET**: Set field-value pairs in a hash.
+  ```bash
+  HSET user:1 name "Alice" age 30
+  ```
+- **HGET**: Get the value of a field.
+  ```bash
+  HGET user:1 name
+  ```
+- **HGETALL**: Get all field-value pairs.
+  ```bash
+  HGETALL user:1
+  ```
+- **HDEL**: Delete a field.
+  ```bash
+  HDEL user:1 age
+  ```
 
-### **Redis Lists**
-- **LPUSH/RPUSH**: Add elements to the head or tail of a list.
-- **LPOP/RPOP**: Remove elements from the head or tail.
-- **LRANGE**: Retrieve a subset of elements from a list.
-- **LLEN**: Get the total number of elements in a list.
-- **LREM**: Remove specific occurrences of a value.
-- **LTRIM**: Trim the list to a specified range.
+##### **Node.js Example**
+```javascript
+const Redis = require("ioredis");
+const redis = new Redis();
 
----
+async function runHashExamples() {
+  try {
+    // HSET: Set field-value pairs in a hash
+    await redis.hset("user:1", "name", "Alice", "age", 30);
+    console.log('HSET user:1: name="Alice", age=30');
 
-## **5. Running the Examples**
+    // HGET: Get the value of a field
+    const name = await redis.hget("user:1", "name");
+    console.log(`HGET user:1 name: ${name}`);
 
-1. Start your Redis server (e.g., using Docker as shown earlier).
-2. Save the code for `string.js` and `list.js` in separate files.
-3. Run the scripts:
-   ```bash
-   node string.js
-   node list.js
-   ```
+    // HGETALL: Get all field-value pairs
+    const user = await redis.hgetall("user:1");
+    console.log(`HGETALL user:1: ${JSON.stringify(user)}`);
 
----
+    // HDEL: Delete a field
+    await redis.hdel("user:1", "age");
+    console.log('HDEL user:1: Removed "age"');
+  } catch (error) {
+    console.error("Error:", error);
+  } finally {
+    redis.disconnect();
+  }
+}
 
-## **Conclusion**
-
-Using `ioredis`, you can easily interact with Redis data structures like Strings and Lists in Node.js. The examples provided demonstrate common operations and their outputs. You can extend these examples to work with other Redis data structures such as Sets, Sorted Sets, Hashes, and more.
-
-## **5. Other Redis Data Structures**
-
-### **Sets**
-- Unordered collections of unique strings.
-- Common commands: `SADD`, `SMEMBERS`, `SREM`, `SINTER`, `SUNION`.
-
-### **Sorted Sets**
-- Similar to sets but with scores associated with each member.
-- Common commands: `ZADD`, `ZRANGE`, `ZREM`, `ZSCORE`.
-
-### **Hashes**
-- Maps between string fields and string values.
-- Common commands: `HSET`, `HGET`, `HDEL`, `HGETALL`.
-
-### **Bitmaps**
-- Bit-level operations on strings.
-- Common commands: `SETBIT`, `GETBIT`, `BITCOUNT`.
-
-### **HyperLogLogs**
-- Probabilistic data structure for estimating the cardinality of a set.
-- Common commands: `PFADD`, `PFCOUNT`, `PFMERGE`.
-
-### **Geospatial Indexes**
-- Store and query geospatial data.
-- Common commands: `GEOADD`, `GEODIST`, `GEORADIUS`.
-
-### **Streams**
-- Append-only logs for messaging and event sourcing.
-- Common commands: `XADD`, `XRANGE`, `XREAD`.
+runHashExamples();
+```
 
 ---
 
-## **Conclusion**
+### **8. Bitmaps**
+Bitmaps allow bit-level operations on strings.
 
-Redis is a versatile and powerful tool for managing in-memory data structures. By using Docker, you can quickly set up a Redis instance and experiment with its rich set of commands. This guide covered installation, strings, lists, and an overview of other data structures. For further exploration, refer to the official Redis documentation. 
+#### **Basic Commands for Bitmaps**
+##### **CLI Examples**
+- **SETBIT**: Set a bit at a specific offset.
+  ```bash
+  SETBIT bitmap 0 1
+  ```
+- **GETBIT**: Get the value of a bit at a specific offset.
+  ```bash
+  GETBIT bitmap 0
+  ```
+- **BITCOUNT**: Count the number of set bits.
+  ```bash
+  BITCOUNT bitmap
+  ```
 
-**Final Note:** Always ensure proper persistence and backup strategies when using Redis in production environments.
+##### **Node.js Example**
+```javascript
+const Redis = require("ioredis");
+const redis = new Redis();
 
+async function runBitmapExamples() {
+  try {
+    // SETBIT: Set a bit at a specific offset
+    await redis.setbit("bitmap", 0, 1);
+    console.log('SETBIT bitmap: Set bit at offset 0');
 
+    // GETBIT: Get the value of a bit at a specific offset
+    const bit = await redis.getbit("bitmap", 0);
+    console.log(`GETBIT bitmap 0: ${bit}`);
 
+    // BITCOUNT: Count the number of set bits
+    const count = await redis.bitcount("bitmap");
+    console.log(`BITCOUNT bitmap: ${count}`);
+  } catch (error) {
+    console.error("Error:", error);
+  } finally {
+    redis.disconnect();
+  }
+}
 
+runBitmapExamples();
+```
 
-https://docs.docker.com/desktop/setup/install/windows-install/
-https://docs.docker.com/desktop/setup/install/mac-install/
+---
+
+### **9. HyperLogLogs**
+HyperLogLogs estimate the cardinality of a set.
+
+#### **Basic Commands for HyperLogLogs**
+##### **CLI Examples**
+- **PFADD**: Add elements to a HyperLogLog.
+  ```bash
+  PFADD hll "item1" "item2"
+  ```
+- **PFCOUNT**: Estimate the cardinality.
+  ```bash
+  PFCOUNT hll
+  ```
+- **PFMERGE**: Merge multiple HyperLogLogs.
+  ```bash
+  PFMERGE merged hll1 hll2
+  ```
+
+##### **Node.js Example**
+```javascript
+const Redis = require("ioredis");
+const redis = new Redis();
+
+async function runHyperLogLogExamples() {
+  try {
+    // PFADD: Add elements to a HyperLogLog
+    await redis.pfadd("hll", "item1", "item2");
+    console.log('PFADD hll: Added items');
+
+    // PFCOUNT: Estimate the cardinality
+    const count = await redis.pfcount("hll");
+    console.log(`PFCOUNT hll: ${count}`);
+  } catch (error) {
+    console.error("Error:", error);
+  } finally {
+    redis.disconnect();
+  }
+}
+
+runHyperLogLogExamples();
+```
+
+---
+
+### **10. Geospatial Indexes**
+Geospatial Indexes store and query location-based data.
+
+#### **Basic Commands for Geospatial Indexes**
+##### **CLI Examples**
+- **GEOADD**: Add locations.
+  ```bash
+  GEOADD cities -122.4235 37.7763 "San Francisco"
+  ```
+- **GEODIST**: Calculate the distance between two locations.
+  ```bash
+  GEODIST cities "San Francisco" "New York" km
+  ```
+- **GEORADIUS**: Find locations within a radius.
+  ```bash
+  GEORADIUS cities -122.4235 37.7763 100 km
+  ```
+
+##### **Node.js Example**
+```javascript
+const Redis = require("ioredis");
+const redis = new Redis();
+
+async function runGeoExamples() {
+  try {
+    // GEOADD: Add locations
+    await redis.geoadd("cities", -122.4235, 37.7763, "San Francisco");
+    console.log('GEOADD cities: Added San Francisco');
+
+    // GEODIST: Calculate the distance between two locations
+    const distance = await redis.geodist("cities", "San Francisco", "New York", "km");
+    console.log(`GEODIST cities: ${distance} km`);
+  } catch (error) {
+    console.error("Error:", error);
+  } finally {
+    redis.disconnect();
+  }
+}
+
+runGeoExamples();
+```
+
+---
+
+### **11. Streams**
+Streams are append-only logs for messaging and event sourcing.
+
+#### **Basic Commands for Streams**
+##### **CLI Examples**
+- **XADD**: Add an entry to a stream.
+  ```bash
+  XADD mystream * sensor-id 1234 temperature 25
+  ```
+- **XRANGE**: Retrieve entries in a range.
+  ```bash
+  XRANGE mystream - +
+  ```
+- **XREAD**: Read from multiple streams.
+  ```bash
+  XREAD COUNT 2 STREAMS mystream 0
+  ```
+
+##### **Node.js Example**
+```javascript
+const Redis = require("ioredis");
+const redis = new Redis();
+
+async function runStreamExamples() {
+  try {
+    // XADD: Add an entry to a stream
+    await redis.xadd("mystream", "*", "sensor-id", 1234, "temperature", 25);
+    console.log('XADD mystream: Added entry');
+
+    // XRANGE: Retrieve entries in a range
+    const entries = await redis.xrange("mystream", "-", "+");
+    console.log(`XRANGE mystream: ${entries}`);
+  } catch (error) {
+    console.error("Error:", error);
+  } finally {
+    redis.disconnect();
+  }
+}
+
+runStreamExamples();
+```
+
+---
+
+### **Conclusion**
+This guide now includes examples for all Redis data types, covering both CLI and Node.js (`ioredis`) usage. You can use these examples to experiment with Redis and build applications leveraging its rich set of features.
