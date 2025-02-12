@@ -1,57 +1,65 @@
 import mongoose from "mongoose";
 
 const videoSchema = new mongoose.Schema({
-    _id:mongoose.Schema.Types.ObjectId,
-    title:{
-        type:String,
-        required:true,
+    _id: mongoose.Schema.Types.ObjectId,
+    title: {
+        type: String,
+        required: true,
+        trim: true,
     },
-    description:{
-        type:String,
-        required:true,
+    description: {
+        type: String,
+        required: true,
+        trim: true,
     },
-    user_id:{
-        type:String,
-        required:true,
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
     },
-    videoUrl:{
-        type:String,
-        required:true,
+    videoUrl: {
+        type: String,
+        required: true,
+        trim: true,
     },
-    videoId:{
-        type:String,
-        required:true,
+    thumbnailUrl: {  // Fixed typo
+        type: String,
+        required: true,
+        trim: true,
     },
-    thumbnmailUrl:{
-        type:String,
-        required:true,
+    thumbnailId: {  // Fixed typo
+        type: String,
+        required: true,
+        trim: true,
     },
-    thumbnmailId:{
-        type:String,
-        required:true,
+    category: {
+        type: String,
+        required: true,
+        trim: true,
     },
-    category:{
-        type:String,
-        required:true
-    },
-    tags:[{
-        type:String
+    tags: [{
+        type: String,
+        trim: true,
     }],
-    likes:{
-        type:Number,
-      
-        default:0
+    likes: {
+        type: Number,
+        default: 0,
+        min: 0,
     },
-    dislikes:{
-        type:Number,
-       
-        default:0
+    dislikes: {
+        type: Number,
+        default: 0,
+        min: 0,
     },
-    views:{
-        type:Number,
-        default:0
+    views: {
+        type: Number,
+        default: 0,
+        min: 0,
     },
-    likedBy:[{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    disLikedBy:[{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-    viewedBy:[{ type: mongoose.Schema.Types.ObjectId, ref: "User" }]
-},{timestamps:true})
+    likedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    disLikedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    viewedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+}, { timestamps: true });
+
+const videoModel = mongoose.model("Video", videoSchema);
+export default videoModel;
