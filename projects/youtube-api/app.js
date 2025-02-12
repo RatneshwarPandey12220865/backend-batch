@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { connectDB } from "./config/db.js";
 import userRoutes from "./routes/user.routes.js"
+import videoRoutes from "./routes/video.routes.js"
 import bodyParser from "body-parser";
 import fileUpload from "express-fileupload";
 
@@ -19,6 +20,7 @@ dotenv.config()
     tempFileDir:"/tmp/"
  }))
 app.use("/api/user" , userRoutes )
+app.use("/api/video" , videoRoutes)
 
 
  export default app;
