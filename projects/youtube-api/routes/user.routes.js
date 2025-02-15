@@ -4,6 +4,7 @@ import { v2 as cloudinary } from "cloudinary";
 import User from "../models/user.model.js";
 import mongoose from "mongoose";
 import jwt from "jsonwebtoken";
+import { checkAuth } from "../middleware/auth.middleware.js";
 const router = express.Router();
 
 cloudinary.config({
@@ -90,8 +91,52 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.post("/update-profile", async (req, res) => {});
+router.put("/update-profile", checkAuth , async (req, res) => {
+  try {
+    const {  channelName, phone } = req.body;
+    let updatedData = { channelName, phone };
 
-router.post("/subscribe", async (req, res) => {});
+    // Handle profile picture update
+    if (req.files && req.files.logo) {
+      const uploadedImage = await cloudinary.uploader.upload(req.files.logo.tempFilePath);
+      updatedData.logoUrl = uploadedImage.secure_url;
+      updatedData.logoId = uploadedImage.public_id;
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(req.user._id, updatedData, { new: true });
+
+    res.status(200).json({ message: "Profile updated successfully", updatedUser });
+  } catch (error) {
+    console.error("Update Profile Error:", error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
+router.post("/subscribe",checkAuth ,  async (req, res) => {
+  try {
+    const {channelId } = req.body; // userId = current user, channelId = channel to subscribe to
+
+    if ( req.user._id === channelId) {
+      return res.status(400).json({ error: "You cannot subscribe to yourself" });
+    }
+
+    // Add the channel to user's subscribed channels
+    await User.findByIdAndUpdate(req.user._id , {
+      $addToSet: { subscribedChannels: channelId },
+    });
+
+    // Increment subscriber count
+    await User.findByIdAndUpdate(channelId, {
+      $inc: { subscribers: 1 },
+    });
+
+    res.status(200).json({ message: "Subscribed successfully" });
+  } catch (error) {
+    console.error("Subscription Error:", error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
+
 
 export default router;

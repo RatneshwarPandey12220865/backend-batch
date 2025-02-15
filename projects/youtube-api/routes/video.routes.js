@@ -2,13 +2,17 @@ import express from "express";
 import mongoose from "mongoose";
 import { checkAuth } from "../middleware/auth.middleware.js";
 import Video from "../models/video.model.js";
-import User from "../models/user.model.js";
-import cloudinary from "../config/cloudinary.js"; // Import Cloudinary config
+
+import cloudinary from "cloudinary"; // Import Cloudinary config
 import fileUpload from "express-fileupload"; // Middleware for handling file uploads
 
 const router = express.Router();
 router.use(fileUpload({ useTempFiles: true })); // Enable file uploads
-
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 // 🔹 Upload Video
 router.post("/upload", checkAuth, async (req, res) => {
   try {
@@ -57,7 +61,7 @@ router.put("/update/:id", checkAuth, async (req, res) => {
     const videoId = req.params.id;
 
     // Find Video
-    let video = await Video.findById(videoId);
+    let video = await Video.findById(`video/${videoId}`);
     if (!video) return res.status(404).json({ error: "Video not found" });
 
     // Ensure Only the Owner Can Update
@@ -96,7 +100,7 @@ router.delete("/delete/:id", checkAuth, async (req, res) => {
   try {
     const videoId = req.params.id;
 
-    let video = await Video.findById(videoId);
+    let video = await Video.findById(`video/${videoId}`);
     if (!video) return res.status(404).json({ error: "Video not found" });
 
     if (video.user_id.toString() !== req.user._id.toString()) {
@@ -140,7 +144,7 @@ router.get("/my-videos", checkAuth, async (req, res) => {
 // 🔹 Get Video by ID
 router.get("/:id", async (req, res) => {
   try {
-    const video = await Video.findById(req.params.id);
+    const video = await Video.findById(`video/${req.params.id}`);
     if (!video) return res.status(404).json({ error: "Video not found" });
 
     video.views += 1; // Increase view count
@@ -173,6 +177,40 @@ router.get("/tags/:tag", async (req, res) => {
   } catch (error) {
     console.error("Fetch Error:", error);
     res.status(500).json({ message: "Something went wrong" });
+  }
+});
+
+// 🔹 Like Video
+router.post("/like", checkAuth , async (req, res) => {
+  try {
+    const {  videoId } = req.body;
+
+    await Video.findByIdAndUpdate(videoId, {
+      $addToSet: { likes: req.user._id  },
+      $pull: { dislikes: req.user._id }, // Remove from dislikes if previously disliked
+    });
+
+    res.status(200).json({ message: "Liked the video" });
+  } catch (error) {
+    console.error("Like Error:", error);
+    res.status(500).json({ error: "Something went wrong" });
+  }
+});
+
+// 🔹 UnLike Video
+router.post("/dislike",checkAuth , async (req, res) => {
+  try {
+    const { videoId } = req.body;
+
+    await Video.findByIdAndUpdate(videoId, {
+      $addToSet: { dislikes: req.user._id},
+      $pull: { likes: req.user._id }, // Remove from likes if previously liked
+    });
+
+    res.status(200).json({ message: "Disliked the video" });
+  } catch (error) {
+    console.error("Dislike Error:", error);
+    res.status(500).json({ error: "Something went wrong" });
   }
 });
 
