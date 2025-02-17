@@ -142,13 +142,21 @@ router.get("/my-videos", checkAuth, async (req, res) => {
 });
 
 // 🔹 Get Video by ID
-router.get("/:id", async (req, res) => {
+router.get("/:id", checkAuth, async (req, res) => {
   try {
-    const video = await Video.findById(`video/${req.params.id}`);
-    if (!video) return res.status(404).json({ error: "Video not found" });
+    const videoId = req.params.id;
+    const userId = req.user._id;
 
-    video.views += 1; // Increase view count
-    await video.save();
+    // Use findByIdAndUpdate to add the user ID to the viewedBy array if not already present
+    const video = await Video.findByIdAndUpdate(
+      videoId,
+      {
+        $addToSet: { viewedBy: userId },  // Add user ID to viewedBy array, avoiding duplicates
+      },
+      { new: true }  // Return the updated video document
+    );
+
+    if (!video) return res.status(404).json({ error: "Video not found" });
 
     res.status(200).json(video);
   } catch (error) {
@@ -156,6 +164,7 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ message: "Something went wrong" });
   }
 });
+
 
 // 🔹 Get Videos by Category
 router.get("/category/:category", async (req, res) => {
