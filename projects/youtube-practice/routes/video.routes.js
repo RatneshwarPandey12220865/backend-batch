@@ -238,8 +238,8 @@ router.post("/dislike" , checkAuth , async(req ,res)=>{
     const { videoId } = req.body;
 
     await Video.findByIdAndUpdate(videoId, {
-      $addToSet: { dislikes: req.user._id},
-      $pull: { likes: req.user._id }, // Remove from likes if previously liked
+      $addToSet: { disLikedBy: req.user._id},
+      $pull: { likedBy: req.user._id }, // Remove from likes if previously liked
     });
 
     
