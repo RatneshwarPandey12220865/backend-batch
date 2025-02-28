@@ -61,3 +61,12 @@ export const loginUser = async (req , res )=>{
 
     res.status(200).json({user, token})
 }
+
+export const getUserProfile = async(req ,res , next)=>{
+    res.status(200).json(req.user);
+}
+
+export const logoutUser = async(req,res, next)=>{
+    res.clearCookie("token");
+    res.status(200).json({message: "Logged out successfully"})
+}
