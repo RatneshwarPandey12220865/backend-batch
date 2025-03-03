@@ -2,14 +2,16 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { UserRound, Mail, Lock, Eye, EyeOff, User } from "lucide-react"
-
+import axios from "axios";
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import {NavLink} from "react-router-dom"
+import {NavLink, useNavigate} from "react-router-dom"
+import { toast } from "sonner"
+import { UserDataContext } from "../context/UserContext"
 
 const riderFormSchema = z.object({
   firstName: z.string().min(2, {
@@ -34,7 +36,8 @@ const riderFormSchema = z.object({
 export function UserRegisterForm() {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-
+  const {user , setUser} = useContext(UserDataContext)
+  const navigate = useNavigate()
   const form = useForm({
     resolver: zodResolver(riderFormSchema),
     defaultValues: {
@@ -45,14 +48,32 @@ export function UserRegisterForm() {
     },
   })
 
-  function onSubmit(data) {
-    setIsLoading(true)
-    // Simulate API call
-    console.log(data)
-    setTimeout(() => {
-      setIsLoading(false)
-      // Handle success - redirect or show success message
-    }, 1500)
+async  function onSubmit(data) {
+   try {
+    setIsLoading(true);
+    const formattedUser = {
+      fullname:{
+        firstname:data.firstName,
+        lastname:data.lastName
+      },
+      email:data.email,
+      password:data.password
+    }
+    const response = await axios.post(`http://localhost:5001/api/v1/users/register` , formattedUser)
+    console.log(response.data);
+    const Resdata = response.data;
+    setUser(Resdata.user)
+    localStorage.setItem("token" , Resdata.token)
+    toast("Successfully User Registered")
+    form.reset()
+    navigate("/")
+   } catch (error) {
+      console.log(error);
+      toast("Something went wrong ")
+   }
+   finally{
+    setIsLoading(false)
+   }
   }
 
   return (

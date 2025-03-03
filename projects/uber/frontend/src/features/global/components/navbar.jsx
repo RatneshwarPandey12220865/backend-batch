@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Button } from "@/components/ui/button";
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList } from "@/components/ui/navigation-menu";
 import { Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NavLink } from "react-router";
+import { UserDataContext } from '../../user/context/UserContext';
 const Navbar = () => {
+  const {user} = useContext(UserDataContext);
   return (
     <div className='bg-black w-full fixed top-0 left-0 h-[4em] border-b border-gray-800 flex items-center justify-between px-6 z-50 text-white'>
       <div className="flex items-center gap-10">
@@ -58,16 +60,24 @@ const Navbar = () => {
         <Button variant="ghost" className="text-white hover:text-gray-600 font-medium">
           Help
         </Button>
-        <NavLink to={"/login"}>
-        <Button variant="ghost" className="text-white hover:text-gray-600 font-medium">
-          Log in
-        </Button>
-        </NavLink>
-        <NavLink to={"/register"}>
-        <Button className="bg-white text-black hover:bg-gray-200 font-medium rounded-full">
-          Register
-        </Button>
-        </NavLink>
+        {user ? (
+          <Button variant="ghost" className="text-white hover:text-gray-600 font-medium">
+            Profile
+          </Button>
+        ) : (
+          <>
+            <NavLink to="/login">
+              <Button variant="ghost" className="text-white hover:text-gray-600 font-medium">
+                Log in
+              </Button>
+            </NavLink>
+            <NavLink to="/register">
+              <Button className="bg-white text-black hover:bg-gray-200 font-medium rounded-full">
+                Register
+              </Button>
+            </NavLink>
+          </>
+        )}
       </div>
     </div>
   );

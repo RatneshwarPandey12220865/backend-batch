@@ -1,6 +1,5 @@
 
 import { CardFooter } from "@/components/ui/card"
-
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -85,9 +84,7 @@ export function CaptainLoginForm() {
                 <FormItem>
                   <div className="flex items-center justify-between">
                     <FormLabel>Password</FormLabel>
-                    <Link href="/captain/forgot-password" className="text-sm font-medium text-primary hover:underline">
-                      Forgot password?
-                    </Link>
+                 
                   </div>
                   <FormControl>
                     <div className="relative">
@@ -145,9 +142,9 @@ export function CaptainLoginForm() {
             <span className="bg-background px-2 text-muted-foreground">Don't have an account?</span>
           </div>
         </div>
-        <Button variant="outline" className="w-full" asChild>
+        {/* <Button variant="outline" className="w-full" asChild>
           <NavLink to="/captain-register">Create Captain Account</NavLink>
-        </Button>
+        </Button> */}
       </CardFooter>
     </Card>
   )
