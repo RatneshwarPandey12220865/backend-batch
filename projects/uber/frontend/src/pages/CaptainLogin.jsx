@@ -1,8 +1,11 @@
 import React from 'react'
+import { CaptainLoginForm } from '../features/captain/components/captain-login-form'
 
 const CaptainLogin = () => {
   return (
-    <div>CaptainLogin</div>
+    <div className="container flex items-center justify-center min-h-screen py-8">
+      <CaptainLoginForm />
+    </div>
   )
 }
 
