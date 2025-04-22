@@ -42,3 +42,8 @@ app.listen(8080 , ()=>{
   // console.log(req.headers.cookie)
   // console.log('Cookies: ', req.cookies)
   //  && and ??
+
+//answer for all above question s
+
+// https://chatgpt.com/share/6807e361-f428-800f-8687-f24f2dc2a9ac
+// https://chatgpt.com/share/6807e46a-7d60-800f-adee-e8a81731ea6f
