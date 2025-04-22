@@ -42,3 +42,6 @@ app.listen(8080 , ()=>{
   // console.log(req.headers.cookie)
   // console.log('Cookies: ', req.cookies)
   //  && and ??
+
+
+// https://chatgpt.com/share/6807e46a-7d60-800f-adee-e8a81731ea6f
